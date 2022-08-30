@@ -8,6 +8,10 @@
         "streambuf": "cpp",
         "tuple": "cpp",
         "type_traits": "cpp",
-        "utility": "cpp"
+        "utility": "cpp",
+        "cwctype": "cpp",
+        "functional": "cpp",
+        "sstream": "cpp",
+        "iterator": "cpp"
     }
 }
