@@ -1,3 +1,9 @@
+/**
+ * baekjoon - 14503
+ * implemenntation, simulation
+ */
+
+
 #include <iostream>
 #include <cstring>
 #define fio ios_base::sync_with_stdio(false), cin.tie(nullptr), cout.tie(nullptr)
