@@ -12,6 +12,8 @@
         "cwctype": "cpp",
         "functional": "cpp",
         "sstream": "cpp",
-        "iterator": "cpp"
+        "iterator": "cpp",
+        "string": "cpp",
+        "iosfwd": "cpp"
     }
 }
