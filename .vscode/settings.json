@@ -15,6 +15,7 @@
         "iterator": "cpp",
         "string": "cpp",
         "iosfwd": "cpp",
-        "random": "cpp"
+        "random": "cpp",
+        "cmath": "cpp"
     }
 }
