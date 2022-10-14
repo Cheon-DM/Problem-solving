@@ -16,6 +16,9 @@
         "string": "cpp",
         "iosfwd": "cpp",
         "random": "cpp",
-        "cmath": "cpp"
+        "cmath": "cpp",
+        "array": "cpp",
+        "memory": "cpp",
+        "istream": "cpp"
     }
 }
