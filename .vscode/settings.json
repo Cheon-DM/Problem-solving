@@ -19,6 +19,7 @@
         "cmath": "cpp",
         "array": "cpp",
         "memory": "cpp",
-        "istream": "cpp"
+        "istream": "cpp",
+        "algorithm": "cpp"
     }
 }
