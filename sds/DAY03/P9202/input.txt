@@ -1,0 +1,10 @@
+3
+ABC
+AB
+A
+
+1
+ABCX
+XXXX
+XXXX
+XXXX

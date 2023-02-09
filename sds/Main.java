@@ -2,6 +2,19 @@ package sds;
 
 public class Main {
 
+    public static void main(String[] args) {
+        String a = "abc";
+        String b = "efg";
+        String c = a + b; // 느림
+
+        StringBuilder sb = new StringBuilder();
+        sb.append(a);
+        sb.append(b);
+        System.out.println(sb.toString()); // 훨 빠름
+
+        StringBuffer sb2 = new StringBuffer(); // 멀티 쓰레드용 (살짝느림)
+    }
+
 }
 
 /**
