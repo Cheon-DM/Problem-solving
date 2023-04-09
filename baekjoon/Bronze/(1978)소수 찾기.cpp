@@ -1,6 +1,6 @@
 /**
  * baekjoon - 1978
- *
+ * prime
  */
 
 #include <iostream>
