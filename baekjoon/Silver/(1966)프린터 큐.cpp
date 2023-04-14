@@ -1,6 +1,6 @@
 /**
  * baekjoon - 1966
- *
+ * implementation, simulation, queue
  */
 
 #include <iostream>
