@@ -1,6 +1,6 @@
 /**
  * baekjoon - 1197
- *
+ * MST
  */
 
 #include <iostream>
@@ -22,7 +22,7 @@ struct cmp
 {
     bool operator()(Edge a, Edge b)
     {
-        return a.cost < b.cost;
+        return a.cost > b.cost;
     }
 };
 
