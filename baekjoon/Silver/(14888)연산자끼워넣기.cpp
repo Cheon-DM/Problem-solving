@@ -1,84 +1,76 @@
 /**
  * baekjoon - 14888
- * bruteforce, backtracking, permutation
+ * bruteforce, backtracking
  * */
 
-#include <iostream>
-#include <vector>
 #include <algorithm>
-#define fio ios_base::sync_with_stdio(false), cin.tie(nullptr), cout.tie(nullptr)
+#include <iostream>
 using namespace std;
 
-int main(){
-    fio;
-    //input
-    int n; cin >> n;
-    int num[4];
-    vector<int> a(n);
-    vector<string> oper;
-    for (int i = 0; i < n; i++){
-        cin >> a[i];
-    }
-    for (int i = 0; i < 4; i++){
-        cin >> num[i];
+int N;
+int nums[11], Oper[4];
+long long MIN = 1000000000, MAX = -1000000000;
+
+void backtracking(int step, long long result, int oper[4]) {
+    if (step == N) {
+        MIN = min(MIN, result);
+        MAX = max(MAX, result);
+        return;
     }
 
-    //sol
-    for (int i = 0; i < 4; i++){
-        if (i == 0) {
-            for (int j = 0; j < num[i]; j++){
-                oper.push_back("+");
-            }
+    if (oper[0] != 0) {
+        long long temp = result;
+        temp += nums[step];
+        oper[0]--;
+        backtracking(step + 1, temp, oper);
+        oper[0]++;
+    }
+    if (oper[1] != 0) {
+        long long temp = result;
+        temp -= nums[step];
+        oper[1]--;
+        backtracking(step + 1, temp, oper);
+        oper[1]++;
+    }
+    if (oper[2] != 0) {
+        long long temp = result;
+        temp *= nums[step];
+        oper[2]--;
+        backtracking(step + 1, temp, oper);
+        oper[2]++;
+    }
+    if (oper[3] != 0) {
+        long long temp = result;
+        if (result > 0) {
+            temp /= nums[step];
+        } else {
+            temp = -temp;
+            temp /= nums[step];
+            temp = -temp;
         }
-        if (i == 1) {
-            for (int j = 0; j < num[i]; j++){
-                oper.push_back("-");
-            }
-        }
-        if (i == 2) {
-            for (int j = 0; j < num[i]; j++){
-                oper.push_back("*");
-            }
-        }
-        if (i == 3) {
-            for (int j = 0; j < num[i]; j++){
-                oper.push_back("/");
-            }
-        }
+        oper[3]--;
+        backtracking(step + 1, temp, oper);
+        oper[3]++;
+    }
+}
+
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
+
+    cin >> N;
+    for (int i = 0; i < N; i++) {
+        cin >> nums[i];
+    }
+    for (int i = 0; i < 4; i++) {
+        cin >> Oper[i];
     }
 
-    sort(oper.begin(), oper.end());
+    backtracking(1, nums[0], Oper);
 
-    long long _min = 999999999;
-    long long _max = -999999999;
-    int index = 0;
-
-    do {
-        int result = a[index++];
-        for (auto it = oper.begin(); it != oper.end(); ++it){
-            if (*it == "+"){
-                result = result + a[index++];
-            }
-            else if (*it == "-"){
-                result = result - a[index++];
-            }
-            else if (*it == "*"){
-                result = result * a[index++];
-            }
-            else if (*it == "/"){
-                if (result < 0) {
-                    result = -((-result) / a[index++]);
-                }
-                else result = result / a[index++];
-            }
-        }
-            
-        if (_min > result) _min = result;
-        if (_max < result) _max = result;
-        index = 0;
-    } while (next_permutation(oper.begin(), oper.end()));
-
-    cout << _max << "\n" << _min;
+    cout << MAX << '\n';
+    cout << MIN << '\n';
 
     return 0;
 }
