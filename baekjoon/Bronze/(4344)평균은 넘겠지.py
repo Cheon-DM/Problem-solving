@@ -1,6 +1,9 @@
 # baekjoon - 4344
 # math, arithmetic
 
+def roundTraditional(val, digits):
+    return round(val+10**(-len(str(val))-1), digits)
+
 C = int(input())
 
 for _ in range(C):
@@ -13,4 +16,4 @@ for _ in range(C):
             cnt += 1
     
     rate = cnt / nums[0] * 100
-    print(f'{rate:.3f}%')
+    print(f'{roundTraditional(rate, 3):.3f}%')
