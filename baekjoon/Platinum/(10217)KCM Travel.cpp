@@ -1,119 +1,63 @@
-/**
- * baekjoon - KCM Travel
- * dp, graph, dijkstra
- */
-
+#include <algorithm>
 #include <iostream>
 #include <vector>
-#include <queue>
-
-#define INF 0xFFFFFF
-
 using namespace std;
+int INF = 1000000;
+int t, n, m, k, u, v, c, d, answer = INF;
+int dp[101][10001];
+vector<pair<int, pair<int, int>>> arr[101];
 
-struct Ticket
-{
-    int end;
-    int cost;
-    int time;
-};
-
-struct compare
-{
-    bool operator()(const Ticket &t1, const Ticket &t2)
-    {
-        return t1.time > t2.time;
+int dfs(int idx, int totalcost) {
+    if (idx == n) {
+        return 0;
     }
-};
-
-int T, N, M, K;
-vector<vector<Ticket>> lines;
-int dp[101][10001]; // N공항에서 M비용으로 걸린 최소 시간
-
-int main()
-{
-    ios_base::sync_with_stdio(0);
-    cin.tie(0);
-    cout.tie(0);
-
-    cin >> T;
-
-    for (int t = 0; t < T; t++)
-    {
-        cin >> N >> M >> K;
-
-        // init
-        lines.clear();
-        for (int i = 0; i < N + 1; i++)
-        {
-            vector<Ticket> tmp;
-            lines.push_back(tmp);
+    if (dp[idx][totalcost] != -1) {
+        return dp[idx][totalcost];
+    }
+    dp[idx][totalcost] = INF;
+    int size = arr[idx].size();
+    for (int i = 0; i < size; i++) {
+        int to = arr[idx][i].first;
+        int cost = arr[idx][i].second.first;
+        int distance = arr[idx][i].second.second;
+        if (totalcost + cost > m) {
+            continue;
         }
-        for (int i = 0; i < N + 1; i++)
-        {
-            for (int j = 0; j < M + 1; j++)
-            {
-                dp[i][j] = INF;
-            }
+        dp[idx][totalcost] = min(dp[idx][totalcost], dfs(to, totalcost + cost) + distance);
+    }
+    return dp[idx][totalcost];
+}
+
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
+    cin >> t;
+    for (int i = 0; i < t; i++) {
+        cin >> n >> m >> k;
+        answer = INF;
+        for (int j = 1; j <= n; j++) {
+            arr[j].clear();
         }
 
-        for (int i = 0; i < K; i++)
-        {
-            int u, v, c, d;
+        for (int j = 0; j < k; j++) {
             cin >> u >> v >> c >> d;
-            lines[u].push_back({v, c, d});
+            arr[u].push_back(make_pair(v, make_pair(c, d)));
         }
-
-        priority_queue<Ticket, vector<Ticket>, compare> pq;
-        pq.push({1, 0, 0});
-
-        dp[1][0] = 0;
-
-        while (!pq.empty())
-        {
-            // 현재 티켓 정보
-            int cur = pq.top().end;
-            int time = pq.top().time;
-            int cost = pq.top().cost;
-            pq.pop();
-
-            if (dp[cur][cost] < time)
-                continue;
-
-            for (int i = 0; i < lines[cur].size(); i++)
-            {
-                // 현재 공항에서 다음 공항으로 이동할 수 있는 티켓 = next
-                int next = lines[cur][i].end;
-                int nTime = time + lines[cur][i].time;
-                int nCost = cost + lines[cur][i].cost;
-
-                // 현재 공항까지 사용한 비용에 다음 공항까지 이동할 수 있는 비용이 M이하인 경우만 가능
-                if (nCost <= M && nTime < dp[next][nCost])
-                {
-                    dp[next][nCost] = nTime;
-                    pq.push({next, nCost, nTime});
-                }
+        for (int i = 1; i <= n; i++) {
+            for (int j = 0; j <= m; j++) {
+                dp[i][j] = -1;
             }
         }
+        answer = dfs(1, 0);
 
-        int ans = INF;
-        for (int i = 1; i <= M; i++)
-        {
-            if (ans > dp[N][i])
-            {
-                ans = dp[N][i];
-            }
+        if (answer == INF) {
+            cout << "Poor KCM";
+        } else {
+            cout << answer;
         }
 
-        if (ans == INF)
-        {
-            cout << "Poor KCM\n";
-        }
-        else
-        {
-            cout << ans << "\n";
-        }
+        cout << "\n";
     }
-
     return 0;
 }
